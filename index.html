@@ -1,12 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Final Test</title>
+	<title>Курсовой проект Макеева Владимира по Java Script Base</title>
 	<script type="text/javascript">
-		var postion = ["Junior QA engineer", "Middle QA engineer", "Porduct owner", "Senior QA engineer", "Middle developer", "Project manager", "Senior developer", "Junior developer"];
+
+		var positionGroup = ["Junior QA engineer", "Middle QA engineer", "Porduct owner", "Senior QA engineer", "Middle developer", "Project manager", "Senior developer", "Junior developer"];
+		var nameGroup  = new Array();
+		var teamUsers = new Object();
+		var countUsers = 8;
+		
+		function getNames() {
+			while(countUsers > 0) {
+				var usersName = prompt("Введите восемь имен" + "\n" + "Еще осталось ввести"+ " " + countUsers +" "+"раз");
+				if(usersName == null || usersName == "") {
+					alert("Пустое поле не должно быть! Введите Имя!")
+				} else {
+					nameGroup.push(usersName);
+					countUsers--;
+				}
+			}
+		}
+
+		function createTeam() {
+			for(var i = 0; i < nameGroup.length; i++) {
+				var point = i + 1;
+				teamUsers["user" + point] = new Object();
+				teamUsers["user" + point].name = nameGroup[i]; 
+				teamUsers["user" + point].position = positionGroup[i]; 
+			}
+		}
+
+		function positionRandom(N1, N2) {
+  			return Math.floor(Math.random() * (N2 - N1) + N1);
+		}
+
+		function setSalary() {
+			for(var data in teamUsers) {
+				if(teamUsers[data].position.indexOf('Junior') == 0) {
+				teamUsers[data].salary = positionRandom(500, 1000);
+				} else if(teamUsers[data].position.indexOf('Middle') == 0) {
+					teamUsers[data].salary = positionRandom(1500, 2000);
+				} else if(teamUsers[data].position.indexOf('Senior') == 0) {
+					teamUsers[data].salary = positionRandom(2500, 3000);
+				} else {
+					teamUsers[data].salary = positionRandom(4000, 4500);
+				}
+			}
+		}
+
+		getNames();
+		createTeam();
+		setSalary();
+		for(var data in teamUsers) {
+			teamUsers[data].tellAboutYourSelf = function () {
+				document.write("Меня зовут" + " " + teamUsers[data].name + "." + " " +"Моя должность :" + " " + teamUsers[data].position + "," + " " + "и я зарабатываю"+ " " + teamUsers[data].salary + " " + "долларов в месяц."+"</br></br>");
+			}
+		}
+		teamUsers.showTeam = function() {
+			var screen = 0; 
+			for(var data in teamUsers) {
+				screen++;
+				if(screen < 9) {
+				document.write("<li>" + teamUsers[data].name + " " + "-" + " " + teamUsers[data].position + "." + " " + "Зарплата:" + " " + teamUsers[data].salary + " " + "$</br></br></li>");
+				}
+			}
+		}
+		document.write("КОМАНДА КОМПАНИИ :</br></br> ")
+		teamUsers.showTeam();
+
+		
+		document.write("БАЗА ДАННЫХ СОТРУДНИКОВ КОМПАНИИ (РЕЗЮМЕ): </br></br>")
+		var screen_2 = 0;
+			for(var data in teamUsers) {
+				screen_2++;
+				if(screen_2 < 9) {		
+				teamUsers[data].tellAboutYourSelf();
+			}		
+		}
 	</script>
 </head>
 <body>
-
+       <!---->
 </body>
 </html>
